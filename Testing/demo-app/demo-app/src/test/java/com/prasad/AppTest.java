@@ -10,6 +10,6 @@ public class AppTest{
     public void test(){
         App obj = new App();
 
-        assertEquals(2, obj.divide(10, 5));
+        assertEquals("avaJ", obj.reverseString("Java"));
     }
 }
