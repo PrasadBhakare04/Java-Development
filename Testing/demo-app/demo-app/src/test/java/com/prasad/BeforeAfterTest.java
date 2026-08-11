@@ -6,12 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BeforeAfterTest {
     BeforeAfter obj = new BeforeAfter();
     
     @BeforeAll
-    static void bo(){
+    void bo(){
         System.out.println("Before all tests");
     }
     
@@ -26,7 +28,7 @@ public class BeforeAfterTest {
     }
 
     @AfterAll
-    static void ao(){
+    void ao(){
         System.out.println("After all tests");
     }
 
