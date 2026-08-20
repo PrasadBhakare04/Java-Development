@@ -15,6 +15,7 @@ public class JdbcUtil {
             conn = DriverManager.getConnection(url, user, password);
             
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return conn;
     }
@@ -24,6 +25,7 @@ public class JdbcUtil {
             statement.close();
             conn.close();
         } catch (Exception e) {
+            e.printStackTrace();
         }
         
     }
