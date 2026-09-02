@@ -26,12 +26,14 @@ public class RegisterUser extends HttpServlet {
 		String name = request.getParameter("username");
 		String city = request.getParameter("city");
 		int affectedRows = 0;
+		PreparedStatement pstment = null;
+		Connection conn = null;
 
 		try {
 			Class.forName("Dbutil");
 
-			Connection conn = Dbutil.getConnection();
-			PreparedStatement pstment = conn.prepareStatement("Insert into registeredusers(uname, ucity) values(?,?)");
+			conn = Dbutil.getConnection();
+			pstment = conn.prepareStatement("Insert into registeredusers(uname, ucity) values(?,?)");
 
 			pstment.setString(1, name);
 			pstment.setString(2, city);
@@ -42,6 +44,14 @@ public class RegisterUser extends HttpServlet {
 			writer.println(affectedRows);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				pstment.close();
+				conn.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
