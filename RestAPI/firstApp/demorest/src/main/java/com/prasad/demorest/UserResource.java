@@ -5,19 +5,28 @@ package com.prasad.demorest;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Request;
 
 @Path("user")
 public class UserResource 
 {
+	static List<User> repo;
+	static {
+		repo = UserRepository.createRepo();
+		
+	}
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getUser() {
 		User a1 = new User();
-		a1.setName("Prasad");
+		a1.setName("Tony");
 		a1.setPoints(10);
 		
 		return a1;
@@ -27,21 +36,24 @@ public class UserResource
 	@Path("list")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> getUsers(){
-		User a1 = new User();
-		a1.setName("Prasad");
-		a1.setPoints(10);
 		
-		User a2 = new User();
-		a2.setName("John");
-		a2.setPoints(20);
-		
-		List<User> users = new ArrayList<>();
-		
-		users.add(a1);
-		users.add(a2);
-		
-		return users;
+		return repo;
 	}
 	
+	@GET
+	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getUserA(@PathParam("id") String id) {
+		
+		int idn = Integer.parseInt(id);
+		
+		return UserRepository.getUser(idn);
+	}
+	
+	@POST
+	public List<User> postUser(User u) {
+		repo.add(u);
+		return repo;
+	}
 	
 }
