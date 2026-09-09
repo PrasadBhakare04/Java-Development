@@ -129,4 +129,62 @@ public class UserDBRepository {
 		
 		return u;
 	}
+	
+	public static User update(User u) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = UserDBRepository.getConn();
+			ps = conn.prepareStatement("update restuser set name=?, points=? where id=?");
+			ps.setString(1, u.getName());
+			ps.setInt(2, u.getPoints());
+			ps.setInt(3, u.getId());
+			int affectedRows = ps.executeUpdate();
+			System.out.println(affectedRows);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return u;
+	}
+	
+	public static User delete(String id) {
+		User u = null;
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = UserDBRepository.getConn();
+			ps = conn.prepareStatement("select * from restuser where id="+id);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				u = new User(rs.getInt(1), rs.getString(2), rs.getInt(3));
+				ps = conn.prepareStatement("delete from restuser where id="+id);
+			}
+			else {
+				return u;
+			}
+			
+			int affectedRows = ps.executeUpdate();
+			System.out.println(affectedRows);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return u;
+	}
 }
