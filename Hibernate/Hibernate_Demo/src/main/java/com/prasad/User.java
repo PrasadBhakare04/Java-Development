@@ -3,11 +3,18 @@ package com.prasad;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+//@Entity(name = user_data) this is to change the jpa entity name only not the table name inside database
+
+//To change the table name inside database or to access the mentioned table name
+//@Table(name = user_data)
+
 @Entity
 public class User {
 
     @Id
     private int uid;
+
+    //@Column(name = user_name) this will change the column name in database
     private String uname;
     private String tech;
 
